@@ -1,1 +1,1 @@
-export const APIKey = '58124213'
+export const ApiKey = '58124213'
