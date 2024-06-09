@@ -15,7 +15,7 @@ const MovieCard = (props) => {
           </div>
         </div>
       </div>
-      MovieCard
+    
     </div>
   );
 };
