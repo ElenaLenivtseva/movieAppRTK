@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncMovieOrShowDetail,
   getSelectedMovieOrShow,
+  removeSelectedMovieOrShow,
 } from "../../features/movies/movieSlice";
-import './MovieDetail.scss'
+import "./MovieDetail.scss";
 
 const MovieDetail = () => {
   const params = useParams();
@@ -16,31 +17,32 @@ const MovieDetail = () => {
 
   useEffect(() => {
     dispatch(fetchAsyncMovieOrShowDetail(imdbID));
+    return () => {
+      dispatch(removeSelectedMovieOrShow());
+    };
   }, [dispatch, imdbID]);
   return (
     <div className="movie-section">
-      <div className="section-left">
-        <div className="movie-title">{data.Title}</div>
-        <div className="movie-rating">
-          <span>
-            IMDB Rating<b className="fa fa-star">⭐</b>: {data.imdbRating}
-          </span>
-          <span>
-            IMDB Votes<b className="fa fa-thumbs-up">👍</b>: {data.imdbVotes}
-          </span>
-          <span>
-            Runtime<b className="fa fa-film">🎬</b>: {data.Runtime}
-          </span>
-          <span>
-            Year<b className="fa fa-calendar">📅</b>: {data.Year}
-          </span>
-          
-          
-        </div>
-        <div className="movie-plot">
-            {data.Plot}
+      {Object.keys(data).length === 0 ? (<div>LOADING...</div>) : (
+      <>
+        <div className="section-left">
+          <div className="movie-title">{data.Title}</div>
+          <div className="movie-rating">
+            <span>
+              IMDB Rating<b className="fa fa-star">⭐</b>: {data.imdbRating}
+            </span>
+            <span>
+              IMDB Votes<b className="fa fa-thumbs-up">👍</b>: {data.imdbVotes}
+            </span>
+            <span>
+              Runtime<b className="fa fa-film">🎬</b>: {data.Runtime}
+            </span>
+            <span>
+              Year<b className="fa fa-calendar">📅</b>: {data.Year}
+            </span>
           </div>
-        <div className="movie-info">
+          <div className="movie-plot">{data.Plot}</div>
+          <div className="movie-info">
             <div>
               <span>Director</span>
               <span>{data.Director}</span>
@@ -62,10 +64,12 @@ const MovieDetail = () => {
               <span>{data.Awards}</span>
             </div>
           </div>
-      </div>
-      <div className="section-right">
-        <img src={data.Poster} alt={data.Title}/>
-      </div>
+        </div>
+        <div className="section-right">
+          <img src={data.Poster} alt={data.Title} />
+        </div>
+      </>
+      )}
     </div>
   );
 };
