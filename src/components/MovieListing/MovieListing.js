@@ -21,8 +21,8 @@ const MovieListing = () => {
     );
   renderShows =
   shows.Response === "True" ? (
-    shows.Search.map((show, index) => {
-        return <MovieCard key={index} data={show} />;
+    shows.Search.map((movie, index) => {
+        return <MovieCard key={index} data={movie} />;
       })
     ) : (
       <div className="movies-error">
